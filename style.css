@@ -1,0 +1,12 @@
+.header {
+    text-align: center;
+    color: white;
+    background-color: rgb(48, 48, 48);
+    width: 100%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.col-md-4 {
+    background-color: rgb(31, 30, 30)
+}
