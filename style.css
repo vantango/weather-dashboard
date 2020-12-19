@@ -8,5 +8,9 @@
 }
 
 .col-md-4 {
-    background-color: rgb(31, 30, 30)
+    background-color: rgb(236, 233, 233);
+}
+
+h2 {
+    color: black;
 }
