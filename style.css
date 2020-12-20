@@ -15,6 +15,14 @@ h2 {
     color: black;
 }
 
+h4 {
+margin-top:1%;
+}
+
 #weather-display {
     width: auto;
+}
+
+#forecast-card {
+    margin-top:1%;
 }
