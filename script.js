@@ -115,10 +115,12 @@ function uvIndex(longitude, latitude) {
 }
 
 $(".card").hide();
+$("#5-day").hide();
 
 // Click search button to pull up weather info for specific city
 $("#search-button").on("click", function () {
     $(".card").show();
+    $("#5-day").show();
     var cityInput = $("#city-input").val()
     currentWeather(cityInput);
 })
@@ -127,6 +129,7 @@ $("#search-button").on("click", function () {
 $("form").submit(function (event) {
     event.preventDefault();
     $(".card").show();
+    $("#5-day").show();
     var cityInput = $("#city-input").val();
     currentWeather(cityInput);
     // console.log(cityInput)
