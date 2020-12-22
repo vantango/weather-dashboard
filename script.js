@@ -30,7 +30,7 @@ function currentWeather(cityInput) {
             console.log(fiveDayResponse)
             for (var i = 0; i < fiveDayResponse.list.length; i++) {
                 // const element = array[index];
-                console.log(fiveDayResponse.list[i])
+                // console.log(fiveDayResponse.list[i])
                 // if {
                 //     // .indexOf
                 // }
@@ -42,24 +42,35 @@ function currentWeather(cityInput) {
 // Calling the UV Index
 function uvIndex(longitude, latitude) {
     var uvQuery = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey;
+    var uvIndex = $("#uv-index")
     $.ajax({
         url: uvQuery,
         method: "GET"
     }).then(function (uvResponse) {
-        console.log(uvResponse)
-        $("#uv-index").text("UV Index: " + uvResponse.value)
-        // if {
+        // console.log(uvResponse)
+        // $("#uv-index").text("UV Index: ");
+        $("#uv-color").text(uvResponse.value)
+
         // Set color depending on uv index value
-        // }
+        if (uvResponse.value < 4.5) {
+            $("#uv-color").css("background-color", "green")
+            // console.log("#uv-index");
+        } else if (uvResponse.value < 9 && uvResponse.value >= 4.5) {
+            $("#uv-color").css("background-color", "yellow")
+        }
+        else {
+            $("#uv-color").css("background-color", "red")
+        }
     })
 }
 
-
+// Click search button to pull up weather info for specific city
 $("#search-button").on("click", function () {
     var cityInput = $("#city-input").val()
     currentWeather(cityInput)
 })
 
+// Adds enter key search functionality for input field
 $("form").submit(function (event) {
     event.preventDefault();
     var cityInput = $("#city-input").val();
