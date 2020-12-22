@@ -1,5 +1,6 @@
 var apiKey = "6006bbb67ca60a0e3ed662e5aa195ac5";
 
+// Collects city input value
 function currentWeather(cityInput) {
     var cityInput = $("#city-input").val()
 
@@ -59,7 +60,7 @@ function currentWeather(cityInput) {
             cardTemp = fiveDayResponse.list[32].main.temp
             $("#card-temp5").text(cardTemp + " °F");
 
-            // Adds temperature to each individual forecast card
+            // Adds humidity to each individual forecast card
             var cardHumidity = fiveDayResponse.list[1].main.humidity
             $("#card-humidity1").text("Humidity: " + cardHumidity);
 
@@ -75,11 +76,6 @@ function currentWeather(cityInput) {
             cardHumidity = fiveDayResponse.list[32].main.humidity
             $("#card-humidity5").text("Humidity: " + cardHumidity);
             console.log(fiveDayResponse)
-
-
-
-
-
 
             // for (var i = 0; i < fiveDayResponse.list.length; i++) {
             //     // const element = array[index];
@@ -118,15 +114,19 @@ function uvIndex(longitude, latitude) {
     })
 }
 
+$(".card").hide();
+
 // Click search button to pull up weather info for specific city
 $("#search-button").on("click", function () {
+    $(".card").show();
     var cityInput = $("#city-input").val()
-    currentWeather(cityInput)
+    currentWeather(cityInput);
 })
 
 // Adds enter key search functionality for input field
 $("form").submit(function (event) {
     event.preventDefault();
+    $(".card").show();
     var cityInput = $("#city-input").val();
     currentWeather(cityInput);
     // console.log(cityInput)
