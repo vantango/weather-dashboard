@@ -1,9 +1,10 @@
 var apiKey = "6006bbb67ca60a0e3ed662e5aa195ac5";
 
-function currentWeather(cityName) {
+function currentWeather(cityInput) {
+    var cityInput = $("#city-input").val()
 
-
-    var urlQuery = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + apiKey + "&units=imperial";
+    // Query URL
+    var urlQuery = "http://api.openweathermap.org/data/2.5/weather?q=" + cityInput + "&appid=" + apiKey + "&units=imperial";
 
     // Calling current city weather details
     $.ajax({
@@ -21,7 +22,7 @@ function currentWeather(cityName) {
         uvIndex(longitude, latitude)
 
         // Calling 5-Day Forecast
-        var fiveDayQuery = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + apiKey;
+        var fiveDayQuery = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityInput + "&appid=" + apiKey;
         $.ajax({
             url: fiveDayQuery,
             method: "GET"
@@ -53,8 +54,15 @@ function uvIndex(longitude, latitude) {
     })
 }
 
+
 $("#search-button").on("click", function () {
     var cityInput = $("#city-input").val()
     currentWeather(cityInput)
+})
 
+$("form").submit(function (event) {
+    event.preventDefault();
+    var cityInput = $("#city-input").val();
+    currentWeather(cityInput);
+    // console.log(cityInput)
 })
