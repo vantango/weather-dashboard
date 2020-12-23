@@ -4,6 +4,9 @@ var cities = [];
 
 var cityInput = $("#city-input").val()
 
+var longitude = response.coord.lon;
+var latitude = response.coord.lat;
+
 // Collects city input value
 function currentWeather(cityInput) {
 
@@ -22,8 +25,6 @@ function currentWeather(cityInput) {
         $("#wind-speed").text("Wind Speed: " + response.wind.speed + " MPH");
 
         // Calling UV Index API
-        var longitude = response.coord.lon;
-        var latitude = response.coord.lat;
         uvIndex(longitude, latitude);
 
         // Calling 5-Day Forecast
@@ -132,7 +133,7 @@ collectCities();
 
 // Calling the UV Index from the API
 function uvIndex(longitude, latitude) {
-    var uvQuery = "https://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey;
+    var uvQuery = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey;
     var uvIndex = $("#uv-index")
     $.ajax({
         url: uvQuery,
