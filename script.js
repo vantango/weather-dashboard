@@ -132,7 +132,7 @@ collectCities();
 
 // Calling the UV Index from the API
 function uvIndex(longitude, latitude) {
-    var uvQuery = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey;
+    var uvQuery = "https://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey;
     var uvIndex = $("#uv-index")
     $.ajax({
         url: uvQuery,
