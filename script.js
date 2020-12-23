@@ -12,14 +12,16 @@ function currentWeather(cityInput) {
         url: urlQuery,
         method: "GET"
     }).then(function (response) {
-        $("#city-name").text(response.name)
-        $("#temp").text("Temperature: " + response.main.temp + " °F")
-        $("#humidity").text("Humidity: " + response.main.humidity + " %")
-        $("#wind-speed").text("Wind Speed: " + response.wind.speed + " MPH")
+        var icon = "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png";
+
+        $("#city-name").text(response.name + " " + dayjs().format("YYYY-MM-DD")).append(`<img src="${icon}">`);
+        $("#temp").text("Temperature: " + response.main.temp + " °F");
+        $("#humidity").text("Humidity: " + response.main.humidity + " %");
+        $("#wind-speed").text("Wind Speed: " + response.wind.speed + " MPH");
         // Calling UV Index API
-        var longitude = response.coord.lon
-        var latitude = response.coord.lat
-        uvIndex(longitude, latitude)
+        var longitude = response.coord.lon;
+        var latitude = response.coord.lat;
+        uvIndex(longitude, latitude);
 
         // Calling 5-Day Forecast
         var fiveDayQuery = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityInput + "&appid=" + apiKey + "&units=imperial";
@@ -28,21 +30,28 @@ function currentWeather(cityInput) {
             method: "GET"
         }).then(function (fiveDayResponse) {
 
+            // Adds weather icon to each individual forecast card
+            var icon = "http://openweathermap.org/img/w/" + fiveDayResponse.list[1].weather[0].icon + ".png";
+
             // Adds date to each individual forecast card
             var cardDate = fiveDayResponse.list[1].dt_txt
-            $("#card-date1").text(cardDate.slice(0, 10));
+            $("#card-date1").text(cardDate.slice(0, 10)).append(`<img src="${icon}">`);
 
             cardDate = fiveDayResponse.list[8].dt_txt
-            $("#card-date2").text(cardDate.slice(0, 10));
+            icon = "http://openweathermap.org/img/w/" + fiveDayResponse.list[8].weather[0].icon + ".png";
+            $("#card-date2").text(cardDate.slice(0, 10)).append(`<img src="${icon}">`);
 
             cardDate = fiveDayResponse.list[16].dt_txt
-            $("#card-date3").text(cardDate.slice(0, 10));
+            icon = "http://openweathermap.org/img/w/" + fiveDayResponse.list[16].weather[0].icon + ".png";
+            $("#card-date3").text(cardDate.slice(0, 10)).append(`<img src="${icon}">`);
 
             cardDate = fiveDayResponse.list[24].dt_txt
-            $("#card-date4").text(cardDate.slice(0, 10));
+            icon = "http://openweathermap.org/img/w/" + fiveDayResponse.list[24].weather[0].icon + ".png";
+            $("#card-date4").text(cardDate.slice(0, 10)).append(`<img src="${icon}">`);
 
             cardDate = fiveDayResponse.list[32].dt_txt
-            $("#card-date5").text(cardDate.slice(0, 10));
+            icon = "http://openweathermap.org/img/w/" + fiveDayResponse.list[32].weather[0].icon + ".png";
+            $("#card-date5").text(cardDate.slice(0, 10)).append(`<img src="${icon}">`);
 
             // Adds temperature to each individual forecast card
             var cardTemp = fiveDayResponse.list[1].main.temp
@@ -75,21 +84,12 @@ function currentWeather(cityInput) {
 
             cardHumidity = fiveDayResponse.list[32].main.humidity
             $("#card-humidity5").text("Humidity: " + cardHumidity);
-            console.log(fiveDayResponse)
-
-            // for (var i = 0; i < fiveDayResponse.list.length; i++) {
-            //     // const element = array[index];
-            //     console.log(fiveDayResponse.list[i])
-            //     // if {
-            //     //     // .indexOf
-            //     // }
-            // }
 
         })
     })
 }
 
-// Calling the UV Index
+// Calling the UV Index from the API
 function uvIndex(longitude, latitude) {
     var uvQuery = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey;
     var uvIndex = $("#uv-index")
@@ -114,6 +114,7 @@ function uvIndex(longitude, latitude) {
     })
 }
 
+// Hides info display cards until a city is searched for
 $(".card").hide();
 $("#5-day").hide();
 
