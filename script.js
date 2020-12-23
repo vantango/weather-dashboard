@@ -87,12 +87,14 @@ function currentWeather(cityInput) {
 
             cardHumidity = fiveDayResponse.list[32].main.humidity
             $("#card-humidity5").text("Humidity: " + cardHumidity);
+
+            // Clear input field after search initiated
+            cityInput = $("#city-input").val("")
         })
     })
 }
 
-collectCities();
-
+// Takes city from input field
 function collectCities() {
     console.log(cityInput)
     cities.push(cityInput);
@@ -101,10 +103,12 @@ function collectCities() {
     pullCities();
 }
 
+// Stores city in local storage
 function storeCities() {
     localStorage.setItem('cities', JSON.stringify(cities));
 }
 
+// Pulls cities from local storage back out
 function pullCities() {
     var savedCities = JSON.parse(localStorage.getItem("cities"));
     if (savedCities !== null) {
@@ -113,6 +117,7 @@ function pullCities() {
     createBtn();
 }
 
+// Generates a functional button for previously searched cities
 function createBtn() {
     $(".form-control").empty();
     for (var i = 0; i < cities.length; i++) {
@@ -123,7 +128,7 @@ function createBtn() {
     }
 }
 
-
+collectCities();
 
 // Calling the UV Index from the API
 function uvIndex(longitude, latitude) {
