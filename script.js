@@ -2,9 +2,10 @@ var apiKey = "6006bbb67ca60a0e3ed662e5aa195ac5";
 
 var cities = [];
 
+var cityInput = $("#city-input").val()
+
 // Collects city input value
 function currentWeather(cityInput) {
-    var cityInput = $("#city-input").val()
 
     // Query URL
     var urlQuery = "http://api.openweathermap.org/data/2.5/weather?q=" + cityInput + "&appid=" + apiKey + "&units=imperial";
@@ -15,11 +16,11 @@ function currentWeather(cityInput) {
         method: "GET"
     }).then(function (response) {
         var icon = "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png";
-
         $("#city-name").text(response.name + " " + dayjs().format("YYYY-MM-DD")).append(`<img src="${icon}">`);
         $("#temp").text("Temperature: " + response.main.temp + " °F");
         $("#humidity").text("Humidity: " + response.main.humidity + " %");
         $("#wind-speed").text("Wind Speed: " + response.wind.speed + " MPH");
+
         // Calling UV Index API
         var longitude = response.coord.lon;
         var latitude = response.coord.lat;
@@ -90,37 +91,39 @@ function currentWeather(cityInput) {
     })
 }
 
-// function collectCities() {
-//     var cityInput = $("#city-input").val();
-//     console.log(cityInput)
-//     // cities.push(cityInput);
-//     storeCities();
-//     pullCities();
-// }
+collectCities();
 
-// function storeCities() {
-//     localStorage.setItem('cities', JSON.stringify(cities));
-// }
+function collectCities() {
+    console.log(cityInput)
+    cities.push(cityInput);
+    console.log(cities);
+    storeCities();
+    pullCities();
+}
 
-// function pullCities() {
-//     var savedCities = JSON.parse(localStorage.getItem("cities"));
-//     if (savedCities !== null) {
-//         cities = storeCities;
-//     }
-//     createBtn();
-// }
+function storeCities() {
+    localStorage.setItem('cities', JSON.stringify(cities));
+}
 
-// function createBtn() {
-//     $(".form-control").empty();
-//     for (var i = 0; i < cities.length; i++) {
-//         var city = cities[i];
-//         var newBtn = $("<button>").text(city)
-//         $("button").addClass("newSearch");
-//         $("#saved-cities").append(newBtn);
-//     }
-// }
+function pullCities() {
+    var savedCities = JSON.parse(localStorage.getItem("cities"));
+    if (savedCities !== null) {
+        cities = storeCities;
+    }
+    createBtn();
+}
 
-// collectCities();
+function createBtn() {
+    $(".form-control").empty();
+    for (var i = 0; i < cities.length; i++) {
+        var city = cities[i];
+        var newBtn = $("<button>").text(city)
+        $("button").addClass("newSearch");
+        $("#saved-cities").append(newBtn);
+    }
+}
+
+
 
 // Calling the UV Index from the API
 function uvIndex(longitude, latitude) {
@@ -130,14 +133,11 @@ function uvIndex(longitude, latitude) {
         url: uvQuery,
         method: "GET"
     }).then(function (uvResponse) {
-        // console.log(uvResponse)
-        // $("#uv-index").text("UV Index: ");
         $("#uv-color").text(uvResponse.value)
 
         // Set color depending on uv index value
         if (uvResponse.value < 4.5) {
             $("#uv-color").css("background-color", "green")
-            // console.log("#uv-index");
         } else if (uvResponse.value < 9 && uvResponse.value >= 4.5) {
             $("#uv-color").css("background-color", "yellow")
         }
@@ -158,7 +158,7 @@ $("#search-button").on("click", function () {
     var cityInput = $("#city-input").val()
     currentWeather(cityInput);
     $("#city-input").val("")
-    // collectCities();
+    collectCities();
 })
 
 // Adds enter key search functionality for input field
@@ -168,6 +168,5 @@ $("form").submit(function (event) {
     $("#5-day").show();
     var cityInput = $("#city-input").val();
     currentWeather(cityInput);
-    // console.log(cityInput)
-    // collectCities();
+    collectCities();
 })
