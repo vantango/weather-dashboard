@@ -44,19 +44,19 @@ function currentWeather(cityInput) {
             var cardDate = fiveDayResponse.list[1].dt_txt
             $("#card-date1").text(cardDate.slice(0, 10)).append(`<img src="${icon}">`);
 
-            cardDate = fiveDayResponse.list[8].dt_txt
+            cardDate = fiveDayResponse.list[9].dt_txt
             icon = "https://openweathermap.org/img/w/" + fiveDayResponse.list[8].weather[0].icon + ".png";
             $("#card-date2").text(cardDate.slice(0, 10)).append(`<img src="${icon}">`);
 
-            cardDate = fiveDayResponse.list[16].dt_txt
+            cardDate = fiveDayResponse.list[17].dt_txt
             icon = "https://openweathermap.org/img/w/" + fiveDayResponse.list[16].weather[0].icon + ".png";
             $("#card-date3").text(cardDate.slice(0, 10)).append(`<img src="${icon}">`);
 
-            cardDate = fiveDayResponse.list[24].dt_txt
+            cardDate = fiveDayResponse.list[25].dt_txt
             icon = "https://openweathermap.org/img/w/" + fiveDayResponse.list[24].weather[0].icon + ".png";
             $("#card-date4").text(cardDate.slice(0, 10)).append(`<img src="${icon}">`);
 
-            cardDate = fiveDayResponse.list[32].dt_txt
+            cardDate = fiveDayResponse.list[33].dt_txt
             icon = "https://openweathermap.org/img/w/" + fiveDayResponse.list[32].weather[0].icon + ".png";
             $("#card-date5").text(cardDate.slice(0, 10)).append(`<img src="${icon}">`);
 
