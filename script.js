@@ -4,6 +4,10 @@ var cities = [];
 
 var cityInput = $("#city-input").val()
 
+// Hides info display cards until a city is searched for
+$(".card").hide();
+$("#5-day").hide();
+
 // Collects city input value
 function currentWeather(cityInput) {
 
@@ -132,7 +136,7 @@ function currentWeather(cityInput) {
 
 // Calling the UV Index from the API
 function uvIndex(longitude, latitude) {
-    var uvQuery = "http://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey;
+    var uvQuery = "https://api.openweathermap.org/data/2.5/uvi?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey;
     var uvIndex = $("#uv-index")
     $.ajax({
         url: uvQuery,
@@ -152,9 +156,7 @@ function uvIndex(longitude, latitude) {
     })
 }
 
-// Hides info display cards until a city is searched for
-$(".card").hide();
-$("#5-day").hide();
+
 
 // Click search button to pull up weather info for specific city
 $("#search-button").on("click", function () {
