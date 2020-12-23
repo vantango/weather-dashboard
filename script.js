@@ -4,9 +4,6 @@ var cities = [];
 
 var cityInput = $("#city-input").val()
 
-var longitude = response.coord.lon;
-var latitude = response.coord.lat;
-
 // Collects city input value
 function currentWeather(cityInput) {
 
@@ -25,6 +22,8 @@ function currentWeather(cityInput) {
         $("#wind-speed").text("Wind Speed: " + response.wind.speed + " MPH");
 
         // Calling UV Index API
+        var longitude = response.coord.lon;
+        var latitude = response.coord.lat;
         uvIndex(longitude, latitude);
 
         // Calling 5-Day Forecast
@@ -96,40 +95,40 @@ function currentWeather(cityInput) {
 }
 
 // Takes city from input field
-function collectCities() {
-    console.log(cityInput)
-    cities.push(cityInput);
-    console.log(cities);
-    storeCities();
-    pullCities();
-}
+// function collectCities() {
+//     console.log(cityInput)
+//     cities.push(cityInput);
+//     console.log(cities);
+//     storeCities();
+//     pullCities();
+// }
 
-// Stores city in local storage
-function storeCities() {
-    localStorage.setItem('cities', JSON.stringify(cities));
-}
+// // Stores city in local storage
+// function storeCities() {
+//     localStorage.setItem('cities', JSON.stringify(cities));
+// }
 
-// Pulls cities from local storage back out
-function pullCities() {
-    var savedCities = JSON.parse(localStorage.getItem("cities"));
-    if (savedCities !== null) {
-        cities = storeCities;
-    }
-    createBtn();
-}
+// // Pulls cities from local storage back out
+// function pullCities() {
+//     var savedCities = JSON.parse(localStorage.getItem("cities"));
+//     if (savedCities !== null) {
+//         cities = storeCities;
+//     }
+//     createBtn();
+// }
 
-// Generates a functional button for previously searched cities
-function createBtn() {
-    $(".form-control").empty();
-    for (var i = 0; i < cities.length; i++) {
-        var city = cities[i];
-        var newBtn = $("<button>").text(city)
-        $("button").addClass("newSearch");
-        $("#saved-cities").append(newBtn);
-    }
-}
+// // Generates a functional button for previously searched cities
+// function createBtn() {
+//     $(".form-control").empty();
+//     for (var i = 0; i < cities.length; i++) {
+//         var city = cities[i];
+//         var newBtn = $("<button>").text(city)
+//         $("button").addClass("newSearch");
+//         $("#saved-cities").append(newBtn);
+//     }
+// }
 
-collectCities();
+// collectCities();
 
 // Calling the UV Index from the API
 function uvIndex(longitude, latitude) {
@@ -164,7 +163,7 @@ $("#search-button").on("click", function () {
     var cityInput = $("#city-input").val()
     currentWeather(cityInput);
     $("#city-input").val("")
-    collectCities();
+    // collectCities();
 })
 
 // Adds enter key search functionality for input field
@@ -174,5 +173,5 @@ $("form").submit(function (event) {
     $("#5-day").show();
     var cityInput = $("#city-input").val();
     currentWeather(cityInput);
-    collectCities();
+    // collectCities();
 })
