@@ -8,14 +8,14 @@ var cityInput = $("#city-input").val()
 function currentWeather(cityInput) {
 
     // Query URL
-    var urlQuery = "http://api.openweathermap.org/data/2.5/weather?q=" + cityInput + "&appid=" + apiKey + "&units=imperial";
+    var urlQuery = "https://api.openweathermap.org/data/2.5/weather?q=" + cityInput + "&appid=" + apiKey + "&units=imperial";
 
     // Calling current city weather details
     $.ajax({
         url: urlQuery,
         method: "GET"
     }).then(function (response) {
-        var icon = "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png";
+        var icon = "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png";
         $("#city-name").text(response.name + " " + dayjs().format("YYYY-MM-DD")).append(`<img src="${icon}">`);
         $("#temp").text("Temperature: " + response.main.temp + " °F");
         $("#humidity").text("Humidity: " + response.main.humidity + " %");
@@ -27,33 +27,33 @@ function currentWeather(cityInput) {
         uvIndex(longitude, latitude);
 
         // Calling 5-Day Forecast
-        var fiveDayQuery = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityInput + "&appid=" + apiKey + "&units=imperial";
+        var fiveDayQuery = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityInput + "&appid=" + apiKey + "&units=imperial";
         $.ajax({
             url: fiveDayQuery,
             method: "GET"
         }).then(function (fiveDayResponse) {
 
             // Adds weather icon to each individual forecast card
-            var icon = "http://openweathermap.org/img/w/" + fiveDayResponse.list[1].weather[0].icon + ".png";
+            var icon = "https://openweathermap.org/img/w/" + fiveDayResponse.list[1].weather[0].icon + ".png";
 
             // Adds date to each individual forecast card
             var cardDate = fiveDayResponse.list[1].dt_txt
             $("#card-date1").text(cardDate.slice(0, 10)).append(`<img src="${icon}">`);
 
             cardDate = fiveDayResponse.list[8].dt_txt
-            icon = "http://openweathermap.org/img/w/" + fiveDayResponse.list[8].weather[0].icon + ".png";
+            icon = "https://openweathermap.org/img/w/" + fiveDayResponse.list[8].weather[0].icon + ".png";
             $("#card-date2").text(cardDate.slice(0, 10)).append(`<img src="${icon}">`);
 
             cardDate = fiveDayResponse.list[16].dt_txt
-            icon = "http://openweathermap.org/img/w/" + fiveDayResponse.list[16].weather[0].icon + ".png";
+            icon = "https://openweathermap.org/img/w/" + fiveDayResponse.list[16].weather[0].icon + ".png";
             $("#card-date3").text(cardDate.slice(0, 10)).append(`<img src="${icon}">`);
 
             cardDate = fiveDayResponse.list[24].dt_txt
-            icon = "http://openweathermap.org/img/w/" + fiveDayResponse.list[24].weather[0].icon + ".png";
+            icon = "https://openweathermap.org/img/w/" + fiveDayResponse.list[24].weather[0].icon + ".png";
             $("#card-date4").text(cardDate.slice(0, 10)).append(`<img src="${icon}">`);
 
             cardDate = fiveDayResponse.list[32].dt_txt
-            icon = "http://openweathermap.org/img/w/" + fiveDayResponse.list[32].weather[0].icon + ".png";
+            icon = "https://openweathermap.org/img/w/" + fiveDayResponse.list[32].weather[0].icon + ".png";
             $("#card-date5").text(cardDate.slice(0, 10)).append(`<img src="${icon}">`);
 
             // Adds temperature to each individual forecast card
