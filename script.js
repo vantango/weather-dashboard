@@ -1,5 +1,7 @@
 var apiKey = "6006bbb67ca60a0e3ed662e5aa195ac5";
 
+var cities = [];
+
 // Collects city input value
 function currentWeather(cityInput) {
     var cityInput = $("#city-input").val()
@@ -84,10 +86,41 @@ function currentWeather(cityInput) {
 
             cardHumidity = fiveDayResponse.list[32].main.humidity
             $("#card-humidity5").text("Humidity: " + cardHumidity);
-
         })
     })
 }
+
+// function collectCities() {
+//     var cityInput = $("#city-input").val();
+//     console.log(cityInput)
+//     // cities.push(cityInput);
+//     storeCities();
+//     pullCities();
+// }
+
+// function storeCities() {
+//     localStorage.setItem('cities', JSON.stringify(cities));
+// }
+
+// function pullCities() {
+//     var savedCities = JSON.parse(localStorage.getItem("cities"));
+//     if (savedCities !== null) {
+//         cities = storeCities;
+//     }
+//     createBtn();
+// }
+
+// function createBtn() {
+//     $(".form-control").empty();
+//     for (var i = 0; i < cities.length; i++) {
+//         var city = cities[i];
+//         var newBtn = $("<button>").text(city)
+//         $("button").addClass("newSearch");
+//         $("#saved-cities").append(newBtn);
+//     }
+// }
+
+// collectCities();
 
 // Calling the UV Index from the API
 function uvIndex(longitude, latitude) {
@@ -124,6 +157,8 @@ $("#search-button").on("click", function () {
     $("#5-day").show();
     var cityInput = $("#city-input").val()
     currentWeather(cityInput);
+    $("#city-input").val("")
+    // collectCities();
 })
 
 // Adds enter key search functionality for input field
@@ -134,4 +169,5 @@ $("form").submit(function (event) {
     var cityInput = $("#city-input").val();
     currentWeather(cityInput);
     // console.log(cityInput)
+    // collectCities();
 })
