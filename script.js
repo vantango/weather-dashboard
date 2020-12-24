@@ -64,32 +64,32 @@ function currentWeather(cityInput) {
             var cardTemp = fiveDayResponse.list[1].main.temp
             $("#card-temp1").text(cardTemp + " °F");
 
-            cardTemp = fiveDayResponse.list[8].main.temp
+            cardTemp = fiveDayResponse.list[9].main.temp
             $("#card-temp2").text(cardTemp + " °F");
 
-            cardTemp = fiveDayResponse.list[16].main.temp
+            cardTemp = fiveDayResponse.list[17].main.temp
             $("#card-temp3").text(cardTemp + " °F");
 
-            cardTemp = fiveDayResponse.list[24].main.temp
+            cardTemp = fiveDayResponse.list[25].main.temp
             $("#card-temp4").text(cardTemp + " °F");
 
-            cardTemp = fiveDayResponse.list[32].main.temp
+            cardTemp = fiveDayResponse.list[33].main.temp
             $("#card-temp5").text(cardTemp + " °F");
 
             // Adds humidity to each individual forecast card
             var cardHumidity = fiveDayResponse.list[1].main.humidity
             $("#card-humidity1").text("Humidity: " + cardHumidity);
 
-            cardHumidity = fiveDayResponse.list[8].main.humidity
+            cardHumidity = fiveDayResponse.list[9].main.humidity
             $("#card-humidity2").text("Humidity: " + cardHumidity);
 
-            cardHumidity = fiveDayResponse.list[16].main.humidity
+            cardHumidity = fiveDayResponse.list[17].main.humidity
             $("#card-humidity3").text("Humidity: " + cardHumidity);
 
-            cardHumidity = fiveDayResponse.list[24].main.humidity
+            cardHumidity = fiveDayResponse.list[25].main.humidity
             $("#card-humidity4").text("Humidity: " + cardHumidity);
 
-            cardHumidity = fiveDayResponse.list[32].main.humidity
+            cardHumidity = fiveDayResponse.list[33].main.humidity
             $("#card-humidity5").text("Humidity: " + cardHumidity);
 
             // Clear input field after search initiated
@@ -99,40 +99,48 @@ function currentWeather(cityInput) {
 }
 
 // Takes city from input field
-// function collectCities() {
-//     console.log(cityInput)
-//     cities.push(cityInput);
-//     console.log(cities);
-//     storeCities();
-//     pullCities();
-// }
+function collectCities(cityInput) {
+    pullCities();
+    console.log(cities)
+    if (cities.indexOf(cityInput) === -1) {
+        cities.push(cityInput);
+        storeCities(cities);
+        createBtn();
+    }
+}
 
-// // Stores city in local storage
-// function storeCities() {
-//     localStorage.setItem('cities', JSON.stringify(cities));
-// }
+// Stores city in local storage
+function storeCities(cities) {
+    localStorage.setItem('cities', JSON.stringify(cities));
+}
 
-// // Pulls cities from local storage back out
-// function pullCities() {
-//     var savedCities = JSON.parse(localStorage.getItem("cities"));
-//     if (savedCities !== null) {
-//         cities = storeCities;
-//     }
-//     createBtn();
-// }
+// Pulls cities from local storage back out
+function pullCities() {
+    var savedCities = JSON.parse(localStorage.getItem("cities"));
+    if (savedCities !== null) {
+        cities = savedCities;
+        console.log(cities);
+    }
+}
 
-// // Generates a functional button for previously searched cities
-// function createBtn() {
-//     $(".form-control").empty();
-//     for (var i = 0; i < cities.length; i++) {
-//         var city = cities[i];
-//         var newBtn = $("<button>").text(city)
-//         $("button").addClass("newSearch");
-//         $("#saved-cities").append(newBtn);
-//     }
-// }
+// Generates a functional button for previously searched cities
+function createBtn() {
+    $(".form-control").empty();
+    $("#saved-cities").empty();
+    for (var i = 0; i < cities.length; i++) {
+        var city = cities[i];
+        var newBtn = $("<button>").text(city)
+        $("button").addClass("newSearch");
+        $("button").on("click", getData);
+        $("#saved-cities").append(newBtn);
+        console.log(city)
+    }
+}
 
-// collectCities();
+function getData() {
+    var cityName = ($(this).text());
+    currentWeather(cityName)
+}
 
 // Calling the UV Index from the API
 function uvIndex(longitude, latitude) {
@@ -153,19 +161,25 @@ function uvIndex(longitude, latitude) {
         else {
             $("#uv-color").css("background-color", "red")
         }
+        $("#uv-color").css("color", "white")
     })
 }
 
-
+// On page load if data exists
+pullCities();
+createBtn();
 
 // Click search button to pull up weather info for specific city
 $("#search-button").on("click", function () {
     $(".card").show();
     $("#5-day").show();
     var cityInput = $("#city-input").val()
-    currentWeather(cityInput);
+
+    if (cityInput !== null && cityInput !== "") {
+        currentWeather(cityInput);
+        collectCities(cityInput);
+    }
     $("#city-input").val("")
-    // collectCities();
 })
 
 // Adds enter key search functionality for input field
@@ -174,6 +188,8 @@ $("form").submit(function (event) {
     $(".card").show();
     $("#5-day").show();
     var cityInput = $("#city-input").val();
-    currentWeather(cityInput);
-    // collectCities();
+    if (cityInput !== null && cityInput !== "") {
+        currentWeather(cityInput);
+        collectCities(cityInput);
+    }
 })
