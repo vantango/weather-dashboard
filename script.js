@@ -161,7 +161,6 @@ function uvIndex(longitude, latitude) {
         else {
             $("#uv-color").css("background-color", "red")
         }
-        $("#uv-color").css("color", "white")
     })
 }
 
