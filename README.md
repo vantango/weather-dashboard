@@ -30,4 +30,4 @@ https://vantango.github.io/weather-dashboard/
 #### Repository
 https://github.com/vantango/weather-dashboard
 
-![weather-dashboard-screenshot]()
+![weather-dashboard-screenshot](https://github.com/vantango/weather-dashboard/blob/main/images/weather-dashboard.png?raw=true)
